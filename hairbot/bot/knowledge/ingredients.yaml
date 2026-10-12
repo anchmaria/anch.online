@@ -1,0 +1,807 @@
+# ============================================================================
+#  БАЗА ИНГРЕДИЕНТОВ  (INCI -> роли)
+#  Источники: методичка «Смываемый уход» (@v_a_l_e_r_o_n), заключение трихолога,
+#  + общепринятая косметическая химия и дерматология.
+#  evidence: high | moderate | low | marketing
+#  Веса ролей задаются не здесь, а в rules.yaml — под конкретный профиль.
+# ============================================================================
+meta:
+  version: 2
+  updated: "2026-10-06"
+
+# ---------------------------------------------------------------------------
+# Справочник ролей (для объяснений пользователю)
+# ---------------------------------------------------------------------------
+roles:
+  surfactant_harsh:     {ru: "жёсткий ПАВ",            zone: scalp}
+  surfactant_mild:      {ru: "мягкий ПАВ",             zone: scalp}
+  surfactant_amphoteric: {ru: "вторичный мягкий ПАВ",   zone: scalp}
+  antifungal:           {ru: "противогрибковый",       zone: scalp}
+  sebum_control:        {ru: "себорегуляция",          zone: scalp}
+  soothing:             {ru: "успокаивает, снимает воспаление", zone: scalp}
+  barrier_lipid:        {ru: "восстанавливает кожный барьер",   zone: scalp}
+  keratolytic_bha:      {ru: "BHA — чистит сальные пробки",     zone: scalp}
+  keratolytic_aha:      {ru: "AHA — отшелушивает",              zone: scalp}
+  growth_stimulant:     {ru: "стимулятор роста",       zone: scalp}
+  antiandrogen:         {ru: "антиандрогенный",        zone: scalp}
+  microcirculation:     {ru: "улучшает микроциркуляцию", zone: scalp}
+  humectant:            {ru: "увлажнитель",            zone: lengths}
+  emollient_deep:       {ru: "глубокое питание (липиды)", zone: lengths}
+  emollient_surface:    {ru: "поверхностное питание",   zone: lengths}
+  lipid_18mea:          {ru: "18-MEA — ключевой липид кутикулы", zone: lengths}
+  fatty_alcohol:        {ru: "жирный спирт (мягкость, распутывание)", zone: lengths}
+  protein_deep:         {ru: "аминокислоты — глубокое восстановление", zone: lengths}
+  protein_medium:       {ru: "гидролизованный протеин", zone: lengths}
+  protein_film:         {ru: "протеин-плёнка",          zone: lengths}
+  cationic:             {ru: "кондиционирующий катионик", zone: lengths}
+  silicone_soluble:     {ru: "водорастворимый силикон", zone: lengths}
+  silicone_insoluble:   {ru: "несмываемый силикон",     zone: lengths}
+  film_former:          {ru: "плёнкообразователь",      zone: lengths}
+  uv_filter:            {ru: "UV-защита",               zone: lengths}
+  chelator:             {ru: "хелат (против жёсткой воды)", zone: both}
+  # --- проблемные ---
+  malassezia_feeding:   {ru: "кормит грибок Malassezia", zone: scalp}
+  heavy_occlusive:      {ru: "тяжёлая плёнка на коже",   zone: scalp}
+  drying_alcohol:       {ru: "сушащий спирт",            zone: both}
+  fragrance_allergen:   {ru: "отдушка-аллерген",         zone: both}
+  preservative_risky:   {ru: "сенсибилизирующий консервант", zone: both}
+  essential_oil_strong: {ru: "активное эфирное масло",   zone: scalp}
+  cooling_irritant:     {ru: "ментол/камфора — раздражает", zone: scalp}
+
+# ---------------------------------------------------------------------------
+# ПАВ
+# ---------------------------------------------------------------------------
+ingredients:
+  - id: sls
+    ru: "Лаурилсульфат натрия"
+    inci: ["Sodium Lauryl Sulfate", "Sodium Dodecyl Sulfate", "SLS"]
+    roles: [surfactant_harsh]
+    evidence: high
+    note: "Самый жёсткий из массовых ПАВ. Смывает липиды кожи, усиливает трансэпидермальную потерю влаги — на чувствительной и воспалённой коже головы даёт зуд и стянутость."
+
+  - id: sles
+    ru: "Лаурет сульфат натрия"
+    inci: ["Sodium Laureth Sulfate", "Sodium Trideceth Sulfate", "SLES"]
+    roles: [surfactant_harsh]
+    evidence: high
+    note: "Мягче SLS, но всё ещё агрессивен. Терпимо для жирной кожи, если дальше в составе идут амфотерные ПАВ и смягчители."
+
+  - id: als
+    ru: "Аммония лаурилсульфат"
+    inci: ["Ammonium Lauryl Sulfate", "Ammonium Laureth Sulfate"]
+    roles: [surfactant_harsh]
+    evidence: high
+    note: "Аналог SLS/SLES, та же логика."
+
+  - id: cocamidopropyl_betaine
+    ru: "Кокамидопропилбетаин"
+    inci: ["Cocamidopropyl Betaine", "Coco-Betaine", "Cocamidopropyl Hydroxysultaine"]
+    roles: [surfactant_amphoteric, surfactant_mild]
+    evidence: high
+    note: "Амфотерный ПАВ: сам моет мягко и снижает агрессивность сульфатов рядом. Хороший знак в составе."
+
+  - id: coco_glucoside
+    ru: "Кокоглюкозид"
+    inci: ["Coco-Glucoside", "Lauryl Glucoside", "Decyl Glucoside", "Caprylyl/Capryl Glucoside"]
+    roles: [surfactant_mild]
+    evidence: high
+    note: "Сахарные ПАВ. Очень деликатные, не нарушают барьер. Моют слабее — нормально для ежедневного мытья."
+
+  - id: sodium_cocoyl_isethionate
+    ru: "Кокоилизетионат натрия"
+    inci: ["Sodium Cocoyl Isethionate", "Sodium Lauroyl Methyl Isethionate"]
+    roles: [surfactant_mild]
+    evidence: high
+    note: "Мягкий ПАВ с хорошей пеной, считается одним из лучших по соотношению «моет / не сушит»."
+
+  - id: sodium_cocoyl_glutamate
+    ru: "Кокоилглутамат натрия"
+    inci: ["Sodium Cocoyl Glutamate", "Disodium Cocoyl Glutamate", "Sodium Lauroyl Glutamate", "Sodium Cocoyl Glycinate", "Sodium Lauroyl Sarcosinate", "Sodium Cocoyl Alaninate"]
+    roles: [surfactant_mild]
+    evidence: high
+    note: "Аминокислотные ПАВ — слабокислый pH, максимально бережны к барьеру."
+
+  - id: sulfosuccinate
+    ru: "Сульфосукцинаты"
+    inci: ["Disodium Laureth Sulfosuccinate", "Disodium Cocoyl Glutamate", "Disodium Lauryl Sulfosuccinate"]
+    roles: [surfactant_mild]
+    evidence: moderate
+    note: "Мягкий вторичный ПАВ, часто в деликатных шампунях."
+
+  - id: taurate
+    ru: "Таураты"
+    inci: ["Sodium Methyl Cocoyl Taurate", "Sodium Methyl Oleoyl Taurate"]
+    roles: [surfactant_mild]
+    evidence: moderate
+    note: "Мягкий ПАВ, устойчив к жёсткой воде."
+
+# ---------------------------------------------------------------------------
+# Противогрибковые / противоперхотные
+# ---------------------------------------------------------------------------
+  - id: piroctone_olamine
+    ru: "Пироктон оламин"
+    inci: ["Piroctone Olamine", "Octopirox"]
+    roles: [antifungal, sebum_control]
+    evidence: high
+    note: "Подавляет Malassezia — основную причину перхоти и себорейного дерматита. Мягче цинка пиритиона, не красит волосы, можно на постоянной основе."
+
+  - id: zinc_pyrithione
+    ru: "Пиритион цинка"
+    inci: ["Zinc Pyrithione", "Pyrithione Zinc", "Climbazole + Zinc Pyrithione"]
+    roles: [antifungal, sebum_control]
+    evidence: high
+    note: "Классический противоперхотный актив. Эффективен, но при длительном применении может сушить — лучше курсом/чередованием."
+
+  - id: climbazole
+    ru: "Климбазол"
+    inci: ["Climbazole"]
+    roles: [antifungal]
+    evidence: high
+    note: "Азольный противогрибковый. Часто в паре с пироктоном — усиливают друг друга."
+
+  - id: ketoconazole
+    ru: "Кетоконазол"
+    inci: ["Ketoconazole"]
+    roles: [antifungal, antiandrogen]
+    evidence: high
+    note: "Аптечный актив (1–2%). Доказанно работает по перхоти и себодерматиту; есть данные о слабом местном антиандрогенном действии. Курсом, по назначению врача."
+
+  - id: selenium_disulfide
+    ru: "Дисульфид селена"
+    inci: ["Selenium Disulfide", "Selenium Sulfide"]
+    roles: [antifungal, sebum_control]
+    evidence: high
+    note: "Сильный противоперхотный, заметно подсушивает. Не для ежедневного применения — 1 раз в неделю максимум."
+
+  - id: ciclopirox
+    ru: "Циклопирокс оламин"
+    inci: ["Ciclopirox Olamine"]
+    roles: [antifungal]
+    evidence: high
+    note: "Аптечный противогрибковый, по эффективности сопоставим с кетоконазолом."
+
+  - id: ichthyol
+    ru: "Ихтиол"
+    inci: ["Ichthammol", "Sodium Shale Oil Sulfonate", "Ichthyol"]
+    roles: [antifungal, soothing, sebum_control]
+    evidence: moderate
+    note: "Снимает воспаление и себорегулирует. Специфический запах, часто в лечебных пилингах."
+
+# ---------------------------------------------------------------------------
+# Себорегуляция
+# ---------------------------------------------------------------------------
+  - id: zinc_pca
+    ru: "Цинк PCA"
+    inci: ["Zinc PCA", "Zinc Gluconate", "Zinc Sulfate", "Zinc Lactate"]
+    roles: [sebum_control, soothing, humectant]
+    evidence: moderate
+    note: "Снижает выработку себума (ингибирует 5-альфа-редуктазу локально) и успокаивает. Один из лучших компонентов для жирной + воспалённой кожи головы."
+
+  - id: niacinamide
+    ru: "Ниацинамид (B3)"
+    inci: ["Niacinamide", "Nicotinamide"]
+    roles: [sebum_control, soothing, barrier_lipid, microcirculation]
+    evidence: high
+    note: "Универсал: нормализует себум, укрепляет барьер, снимает покраснение и улучшает микроциркуляцию. Отлично для жирной чувствительной кожи головы."
+
+  - id: saw_palmetto
+    ru: "Со пальметто (сереноя)"
+    inci: ["Serenoa Serrulata Fruit Extract", "Serenoa Repens", "Saw Palmetto Extract"]
+    roles: [antiandrogen, sebum_control]
+    evidence: moderate
+    note: "Растительный ингибитор 5-альфа-редуктазы. При АГА — вспомогательный актив, не замена стимулятору."
+
+  - id: burdock
+    ru: "Лопух (репейник)"
+    inci: ["Arctium Lappa Root Extract", "Arctium Majus Root Extract"]
+    roles: [sebum_control, soothing]
+    evidence: low
+    note: "Традиционный себорегулятор. Доказательность слабая, вреда нет."
+
+  - id: nettle
+    ru: "Крапива"
+    inci: ["Urtica Dioica Extract", "Urtica Dioica Leaf Extract"]
+    roles: [sebum_control, microcirculation]
+    evidence: low
+    note: "Народный актив, мягкое себорегулирующее действие."
+
+# ---------------------------------------------------------------------------
+# Кислоты / отшелушивание
+# ---------------------------------------------------------------------------
+  - id: salicylic_acid
+    ru: "Салициловая кислота (BHA)"
+    inci: ["Salicylic Acid", "Betaine Salicylate", "Capryloyl Salicylic Acid", "Willow Bark Extract", "Salix Alba Bark Extract"]
+    roles: [keratolytic_bha, sebum_control, antifungal]
+    evidence: high
+    note: "Жирорастворимая — заходит ВНУТРЬ сальной пробки и растворяет её. Для жирной кожи головы критична: AHA этого не умеют."
+
+  - id: lactic_acid
+    ru: "Молочная кислота (AHA)"
+    inci: ["Lactic Acid", "Sodium Lactate"]
+    roles: [keratolytic_aha, humectant]
+    evidence: high
+    note: "Отшелушивает поверхностно + увлажняет. Мягче гликолевой."
+
+  - id: glycolic_acid
+    ru: "Гликолевая кислота (AHA)"
+    inci: ["Glycolic Acid"]
+    roles: [keratolytic_aha]
+    evidence: high
+    note: "Самая мелкая молекула среди AHA — проникает глубже, но и раздражает сильнее. На воспалённой коже — осторожно."
+
+  - id: mandelic_acid
+    ru: "Миндальная кислота"
+    inci: ["Mandelic Acid"]
+    roles: [keratolytic_aha, antifungal]
+    evidence: moderate
+    note: "Крупная молекула — самая деликатная AHA, подходит чувствительной коже."
+
+  - id: urea
+    ru: "Мочевина"
+    inci: ["Urea", "Hydroxyethyl Urea"]
+    roles: [humectant, keratolytic_aha]
+    evidence: high
+    note: "До 10% — увлажнитель, выше — кератолитик. Хорошо при сухих корочках."
+
+# ---------------------------------------------------------------------------
+# Успокаивающие / барьерные
+# ---------------------------------------------------------------------------
+  - id: panthenol
+    ru: "Пантенол (провитамин B5)"
+    inci: ["Panthenol", "D-Panthenol", "Panthenyl Ethyl Ether", "Pro-Vitamin B5"]
+    roles: [soothing, humectant, barrier_lipid]
+    evidence: high
+    note: "Заживляет, снимает раздражение, удерживает влагу. Работает и на коже, и на длине. Безопасен в любой концентрации."
+
+  - id: allantoin
+    ru: "Аллантоин"
+    inci: ["Allantoin"]
+    roles: [soothing]
+    evidence: high
+    note: "Смягчает, ускоряет регенерацию, снимает зуд."
+
+  - id: bisabolol
+    ru: "Бисаболол"
+    inci: ["Bisabolol", "Alpha-Bisabolol"]
+    roles: [soothing]
+    evidence: high
+    note: "Активная часть ромашки, выраженно противовоспалительный."
+
+  - id: centella
+    ru: "Центелла (готу кола)"
+    inci: ["Centella Asiatica Extract", "Madecassoside", "Asiaticoside", "Madecassic Acid", "Asiatic Acid"]
+    roles: [soothing, barrier_lipid, microcirculation]
+    evidence: high
+    note: "Снимает воспаление, укрепляет сосуды и стимулирует синтез коллагена — особенно уместна, когда на трихоскопии видна сосудистая сеточка."
+
+  - id: beta_glucan
+    ru: "Бета-глюкан"
+    inci: ["Beta-Glucan", "Avena Sativa Kernel Extract", "Sodium Carboxymethyl Beta-Glucan"]
+    roles: [soothing, humectant, barrier_lipid]
+    evidence: moderate
+    note: "Успокаивает, восстанавливает барьер, держит влагу."
+
+  - id: aloe
+    ru: "Алоэ"
+    inci: ["Aloe Barbadensis Leaf Juice", "Aloe Barbadensis Leaf Extract", "Aloe Vera"]
+    roles: [soothing, humectant]
+    evidence: moderate
+    note: "Мягко успокаивает и увлажняет."
+
+  - id: ceramides
+    ru: "Церамиды"
+    inci: ["Ceramide NP", "Ceramide AP", "Ceramide EOP", "Ceramide NG", "Ceramide 3", "Ceramide 1", "Ceramide 6-II"]
+    roles: [barrier_lipid, emollient_deep]
+    evidence: high
+    note: "Прямое строительное сырьё для кожного барьера. Если барьер нарушен избыточным очищением — это то, что нужно."
+
+  - id: cholesterol
+    ru: "Холестерол"
+    inci: ["Cholesterol"]
+    roles: [barrier_lipid]
+    evidence: high
+    note: "Третий компонент барьерного «цемента» (церамиды + ЖК + холестерол)."
+
+  - id: phospholipids
+    ru: "Фосфолипиды / лецитин"
+    inci: ["Phospholipids", "Lecithin", "Hydrogenated Lecithin", "Phosphatidylcholine", "Sphingolipids", "Glycolipids"]
+    roles: [barrier_lipid, emollient_deep]
+    evidence: high
+    note: "Сложные липиды — восстанавливают и кожный барьер, и липидный слой волоса. В методичке отмечены как «волшебные»."
+
+  - id: squalane
+    ru: "Сквалан"
+    inci: ["Squalane", "Olive Squalane", "Hydrogenated Squalene"]
+    roles: [barrier_lipid, emollient_surface]
+    evidence: high
+    note: "Липид, идентичный кожному. ВАЖНО: не кормит Malassezia — один из немногих безопасных «масел» для кожи головы с перхотью."
+
+  - id: allantoin_glycyrrhiza
+    ru: "Солодка (глицирризинат)"
+    inci: ["Glycyrrhiza Glabra Root Extract", "Dipotassium Glycyrrhizate", "Stearyl Glycyrrhetinate", "Licorice Extract"]
+    roles: [soothing]
+    evidence: moderate
+    note: "Сильный противовоспалительный растительный актив."
+
+# ---------------------------------------------------------------------------
+# Рост / АГА
+# ---------------------------------------------------------------------------
+  - id: minoxidil
+    ru: "Миноксидил"
+    inci: ["Minoxidil"]
+    roles: [growth_stimulant, microcirculation]
+    evidence: high
+    note: "Золотой стандарт при АГА с наибольшей доказательной базой (для женщин обычно 2–5%). Безрецептурный не везде — применяется по согласованию с врачом. Отмена = откат результата."
+
+  - id: aminexil
+    ru: "Аминексил"
+    inci: ["Aminexil", "Diaminopyrimidine Oxide", "Kopexil", "2,4-Diamino-Pyrimidine-3-Oxide"]
+    roles: [growth_stimulant]
+    evidence: moderate
+    note: "Структурный аналог миноксидила. Главная задача — препятствовать фиброзу (уплотнению) вокруг фолликула. Именно его рекомендовал трихолог при признаках фиброзированных участков."
+
+  - id: procapil
+    ru: "Прокапил"
+    inci: ["Procapil", "Apigenin", "Oleanolic Acid", "Biotinoyl Tripeptide-1"]
+    roles: [growth_stimulant, antiandrogen, microcirculation]
+    evidence: moderate
+    note: "Комплекс: апигенин (микроциркуляция) + олеаноловая кислота (анти-ДГТ) + пептид (укрепление крепления волоса). Есть клинические работы по АГА."
+
+  - id: capixyl
+    ru: "Капиксил"
+    inci: ["Capixyl", "Acetyl Tetrapeptide-3", "Trifolium Pratense Flower Extract", "Red Clover Extract"]
+    roles: [growth_stimulant, antiandrogen]
+    evidence: moderate
+    note: "Пептид + биоханин А из клевера. Ингибирует 5-альфа-редуктазу и улучшает закрепление волоса в фолликуле."
+
+  - id: redensyl
+    ru: "Реденсил"
+    inci: ["Redensyl", "Dihydroquercetin-Glucoside", "EGCG2", "Larix Europaea Wood Extract"]
+    roles: [growth_stimulant]
+    evidence: moderate
+    note: "Работает со стволовыми клетками наружного корневого влагалища, возвращает волос в анаген."
+
+  - id: anagain
+    ru: "AnaGain (горох)"
+    inci: ["Pisum Sativum Sprout Extract", "AnaGain"]
+    roles: [growth_stimulant]
+    evidence: low
+    note: "Побеги гороха. Данные в основном производителя."
+
+  - id: baicapil
+    ru: "Baicapil"
+    inci: ["Baicapil", "Scutellaria Baicalensis Root Extract", "Triticum Vulgare Germ Extract"]
+    roles: [growth_stimulant]
+    evidence: low
+    note: "Комплекс байкалина и пшеничных ростков."
+
+  - id: adenosine
+    ru: "Аденозин"
+    inci: ["Adenosine"]
+    roles: [growth_stimulant, microcirculation]
+    evidence: moderate
+    note: "Продлевает фазу анагена, есть японские исследования по АГА."
+
+  - id: caffeine
+    ru: "Кофеин"
+    inci: ["Caffeine", "Coffea Arabica Seed Extract", "Trimethylxanthine"]
+    roles: [growth_stimulant, microcirculation]
+    evidence: moderate
+    note: "Блокирует подавляющее действие ДГТ на фолликул in vitro. Вспомогательный, не основной актив."
+
+  - id: peptides_growth
+    ru: "Пептиды для роста"
+    inci: ["Acetyl Tetrapeptide-3", "Biotinoyl Tripeptide-1", "Copper Tripeptide-1", "Myristoyl Pentapeptide-17", "Oligopeptide-54", "Decapeptide-18"]
+    roles: [growth_stimulant]
+    evidence: moderate
+    note: "Сигнальные пептиды: укрепляют крепление волоса, удлиняют анаген."
+
+  - id: rosemary_oil
+    ru: "Масло розмарина"
+    inci: ["Rosmarinus Officinalis Leaf Oil", "Rosmarinus Officinalis Leaf Extract"]
+    roles: [growth_stimulant, microcirculation, essential_oil_strong]
+    evidence: moderate
+    note: "В рандомизированном исследовании сопоставим с миноксидилом 2% на горизонте 6 мес. НО: это эфирное масло — на воспалённой чувствительной коже может раздражать."
+
+  - id: melatonin
+    ru: "Мелатонин"
+    inci: ["Melatonin"]
+    roles: [growth_stimulant]
+    evidence: moderate
+    note: "Есть данные по увеличению густоты при наружном применении у женщин с АГА."
+
+  - id: stemoxydine
+    ru: "Стемоксидин"
+    inci: ["Stemoxydine"]
+    roles: [growth_stimulant]
+    evidence: low
+    note: "Выводит фолликул из фазы покоя (кеноген)."
+
+  - id: pumpkin_seed
+    ru: "Масло семян тыквы"
+    inci: ["Cucurbita Pepo Seed Oil", "Cucurbita Pepo Seed Extract"]
+    roles: [antiandrogen, malassezia_feeding]
+    evidence: low
+    note: "Слабый ингибитор 5-альфа-редуктазы. На коже головы с перхотью — минус, т.к. это обычное растительное масло."
+
+  - id: nicotinate
+    ru: "Никотинаты (разогревающие)"
+    inci: ["Methyl Nicotinate", "Benzyl Nicotinate", "Hexyl Nicotinate", "Capsicum Annuum Extract", "Capsaicin"]
+    roles: [microcirculation, cooling_irritant]
+    evidence: low
+    note: "Вызывают прилив крови. На воспалённой чувствительной коже головы часто дают больше вреда, чем пользы."
+
+# ---------------------------------------------------------------------------
+# Увлажнители (хумектанты)
+# ---------------------------------------------------------------------------
+  - id: hyaluronic
+    ru: "Гиалуроновая кислота"
+    inci: ["Hyaluronic Acid", "Sodium Hyaluronate", "Hydrolyzed Hyaluronic Acid", "Sodium Acetylated Hyaluronate"]
+    roles: [humectant]
+    evidence: high
+    note: "Эталонный увлажнитель. Притягивает влагу, делает волос эластичнее."
+
+  - id: glycerin
+    ru: "Глицерин"
+    inci: ["Glycerin", "Glycerol", "Diglycerin", "Glyceryl Stearate"]
+    roles: [humectant]
+    evidence: high
+    note: "Базовый увлажнитель. В очень сухом воздухе без закрывающего липида может тянуть влагу ИЗ волоса — поэтому глицерин всегда «закрываем» маслом/плёнкой."
+
+  - id: glycols
+    ru: "Гликоли"
+    inci: ["Propylene Glycol", "Butylene Glycol", "Pentylene Glycol", "Butanediol", "Dipropylene Glycol", "Caprylyl Glycol", "Propanediol", "1,2-Hexanediol"]
+    roles: [humectant]
+    evidence: high
+    note: "Увлажнители + проводники активов вглубь. В лосьонах для роста пропиленгликоль почти всегда есть — он нужен для доставки актива."
+
+  - id: betaine
+    ru: "Бетаин"
+    inci: ["Betaine", "Trimethylglycine"]
+    roles: [humectant, soothing]
+    evidence: high
+    note: "Мягкий увлажнитель, снижает раздражающий потенциал ПАВ."
+
+  - id: pca
+    ru: "PCA / пирролидонкарбоновая кислота"
+    inci: ["PCA", "Sodium PCA", "Pyrrolidone Carboxylic Acid", "Pyroglutamic Acid"]
+    roles: [humectant]
+    evidence: high
+    note: "Часть натурального увлажняющего фактора (NMF)."
+
+  - id: creatine
+    ru: "Креатин"
+    inci: ["Creatine", "Creatinine"]
+    roles: [humectant, protein_deep]
+    evidence: moderate
+    note: "Увлажняет и поддерживает энергетику клеток фолликула."
+
+  - id: honey_algae
+    ru: "Мёд / водоросли"
+    inci: ["Honey Extract", "Mel", "Algae Extract", "Laminaria Digitata Extract", "Saccharina Japonica Extract", "Chondrus Crispus Extract"]
+    roles: [humectant, soothing]
+    evidence: low
+    note: "Увлажняющие экстракты, мягкое действие."
+
+  - id: trehalose
+    ru: "Трегалоза"
+    inci: ["Trehalose"]
+    roles: [humectant]
+    evidence: moderate
+    note: "Сахарный увлажнитель, защищает белки от денатурации."
+
+# ---------------------------------------------------------------------------
+# Масла: ГЛУБОКИЕ (по списку методички) — и флаг Malassezia
+# ---------------------------------------------------------------------------
+  - id: coconut_oil
+    ru: "Кокосовое масло"
+    inci: ["Cocos Nucifera Oil", "Coconut Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: high
+    note: "Единственное масло с доказанным проникновением В волос (лауриновая кислота) — снижает потерю белка. НО на кожу головы с перхотью нельзя: лауриновая кислота C12 — прямая еда для Malassezia."
+
+  - id: cocoa_butter
+    ru: "Масло какао"
+    inci: ["Theobroma Cacao Seed Butter", "Cocoa Butter"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Глубокое питание для длины. На кожу головы с перхотью — нет."
+
+  - id: babassu
+    ru: "Масло бабассу"
+    inci: ["Orbignya Oleifera Seed Oil", "Babassu Oil", "Orbignya Speciosa Kernel Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "По составу близко к кокосовому, но легче."
+
+  - id: macadamia
+    ru: "Масло макадамии"
+    inci: ["Macadamia Ternifolia Seed Oil", "Macadamia Integrifolia Seed Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Богато пальмитолеиновой кислотой, близко к кожному салу. Отлично для длины."
+
+  - id: marula
+    ru: "Масло марулы"
+    inci: ["Sclerocarya Birrea Seed Oil", "Marula Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Высокое содержание олеиновой кислоты, хорошо впитывается."
+
+  - id: shea
+    ru: "Масло ши"
+    inci: ["Butyrospermum Parkii Butter", "Shea Butter", "Butyrospermum Parkii Oil"]
+    roles: [emollient_deep, heavy_occlusive]
+    evidence: high
+    note: "Очень богатое питание для длины. Тяжёлое — тонкие волосы может утяжелить, на корни не наносим."
+
+  - id: olive_oil
+    ru: "Оливковое масло"
+    inci: ["Olea Europaea Fruit Oil", "Olive Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Олеиновая кислота C18 — активно кормит Malassezia. Для длины ок, для кожи с перхотью — нет."
+
+  - id: argan
+    ru: "Масло арганы"
+    inci: ["Argania Spinosa Kernel Oil", "Argan Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Классика для длины. На кожу головы при перхоти — нежелательно (C18)."
+
+  - id: avocado
+    ru: "Масло авокадо"
+    inci: ["Persea Gratissima Oil", "Avocado Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Глубокое питание, одно из немногих частично проникающих масел."
+
+  - id: almond
+    ru: "Масло сладкого миндаля"
+    inci: ["Prunus Amygdalus Dulcis Oil", "Sweet Almond Oil"]
+    roles: [emollient_deep, malassezia_feeding]
+    evidence: moderate
+    note: "Лёгкое питательное масло для длины."
+
+# --- поверхностные / прочие масла ---
+  - id: jojoba
+    ru: "Масло жожоба"
+    inci: ["Simmondsia Chinensis Seed Oil", "Jojoba Oil", "Jojoba Esters"]
+    roles: [emollient_surface, malassezia_feeding]
+    evidence: moderate
+    note: "Технически жидкий воск, близок к кожному салу. Эфиры C20–C22 — Malassezia их усваивает, на перхотную кожу осторожно."
+
+  - id: castor
+    ru: "Касторовое масло"
+    inci: ["Ricinus Communis Seed Oil", "Castor Oil", "Hydrogenated Castor Oil"]
+    roles: [emollient_surface, heavy_occlusive, malassezia_feeding]
+    evidence: low
+    note: "Очень плотное, тяжело смывается. Популярный «народный» актив для роста — доказательств нет."
+
+  - id: grapeseed_sunflower
+    ru: "Виноградная косточка / подсолнечник"
+    inci: ["Vitis Vinifera Seed Oil", "Helianthus Annuus Seed Oil", "Sesamum Indicum Seed Oil", "Prunus Armeniaca Kernel Oil", "Carthamus Tinctorius Seed Oil"]
+    roles: [emollient_surface, malassezia_feeding]
+    evidence: moderate
+    note: "Лёгкие поверхностные масла. Питают, но не восстанавливают глубоко."
+
+  - id: mct
+    ru: "Каприлик/каприк триглицерид (MCT)"
+    inci: ["Caprylic/Capric Triglyceride", "Caprylic Triglyceride", "Coco-Caprylate", "Coco-Caprylate/Caprate"]
+    roles: [emollient_deep, barrier_lipid]
+    evidence: high
+    note: "«Волшебный» компонент из методички: сбор ЖК, максимально близкий к составу волоса. Бонус: C8/C10 — ВНЕ диапазона питания Malassezia, поэтому безопасен и для кожи головы с перхотью."
+
+  - id: mineral_oil
+    ru: "Минеральное масло"
+    inci: ["Paraffinum Liquidum", "Mineral Oil", "Petrolatum", "Isohexadecane", "Hydrogenated Polyisobutene"]
+    roles: [emollient_surface, heavy_occlusive]
+    evidence: high
+    note: "Инертная плёнка. Не кормит Malassezia (это плюс), но и не питает — только запечатывает. На корни тонких волос — утяжелит."
+
+# ---------------------------------------------------------------------------
+# Жирные кислоты и 18-MEA
+# ---------------------------------------------------------------------------
+  - id: fatty_acids
+    ru: "Свободные жирные кислоты"
+    inci: ["Palmitic Acid", "Stearic Acid", "Oleic Acid", "Linoleic Acid", "Linolenic Acid", "Lauric Acid", "Myristic Acid", "Behenic Acid"]
+    roles: [emollient_deep, barrier_lipid]
+    evidence: high
+    note: "Прямое восполнение липидного слоя волоса — то, из чего он и состоит."
+
+  - id: mea18
+    ru: "18-MEA (метилэйкозановая кислота)"
+    inci:
+      - "C10-40 Isoalkylamidopropylethyldimonium Ethosulfate"
+      - "Behentrimonium Methosulfate and C10-40 Isoalkylamidopropylethyldimonium Ethosulfate"
+      - "Cetearamidoethyldiethonium Succinoyl Hydrolyzed Pea Protein"
+      - "Methyl Eicosanoate"
+      - "18-MEA"
+    roles: [lipid_18mea, emollient_deep, cationic]
+    evidence: high
+    note: "Главный липид кутикулы — до половины её липидного состава. Восстанавливает гидрофобный слой, который смывается шампунями и окрашиванием. Главный маркер действительно хорошей маски."
+
+# ---------------------------------------------------------------------------
+# Жирные спирты
+# ---------------------------------------------------------------------------
+  - id: fatty_alcohols
+    ru: "Жирные спирты"
+    inci: ["Cetearyl Alcohol", "Cetyl Alcohol", "Cetyl Stearyl Alcohol", "Stearyl Alcohol", "Behenyl Alcohol", "Myristyl Alcohol", "Lauryl Alcohol", "Isostearyl Alcohol", "Decyl Alcohol", "Caprylic Alcohol", "Oleyl Alcohol", "Arachidyl Alcohol"]
+    roles: [fatty_alcohol, emollient_surface]
+    evidence: high
+    note: "НЕ сушащие спирты — наоборот, смягчают, распутывают, дают плёнку и текстуру. В кондиционерах это норма и признак рабочей базы."
+
+# ---------------------------------------------------------------------------
+# Катионики (кондиционирование)
+# ---------------------------------------------------------------------------
+  - id: cationics
+    ru: "Кондиционирующие катионики"
+    inci: ["Behentrimonium Chloride", "Behentrimonium Methosulfate", "Cetrimonium Chloride", "Cetrimonium Methosulfate", "Distearyldimonium Chloride", "Stearamidopropyl Dimethylamine", "Dicetyldimonium Chloride", "Quaternium-87", "Quaternium-91"]
+    roles: [cationic, emollient_surface]
+    evidence: high
+    note: "Нейтрализуют отрицательный заряд повреждённого волоса, закрывают чешуйки, убирают пушение и статику."
+
+  - id: polyquaternium
+    ru: "Поликватерниумы"
+    inci: ["Polyquaternium-7", "Polyquaternium-10", "Polyquaternium-11", "Polyquaternium-37", "Polyquaternium-67", "Guar Hydroxypropyltrimonium Chloride"]
+    roles: [cationic, film_former]
+    evidence: high
+    note: "Плёнкообразующие катионики. Дают гладкость и антистатику, часть из них может накапливаться."
+
+# ---------------------------------------------------------------------------
+# Протеины
+# ---------------------------------------------------------------------------
+  - id: amino_acids
+    ru: "Аминокислоты"
+    inci: ["Glycine", "Alanine", "Serine", "Lysine", "Leucine", "Arginine", "Proline", "Cysteine", "Glutamic Acid", "Phenylalanine", "Valine", "Tryptophan", "Isoleucine", "Methionine", "Threonine", "Histidine", "Amino Acids"]
+    roles: [protein_deep]
+    evidence: high
+    note: "Самые мелкие молекулы белка — восстанавливают глубоко и НЕ дают плёнку, не перегружают волос."
+
+  - id: hydrolyzed_protein
+    ru: "Гидролизованные протеины"
+    inci:
+      - "Hydrolyzed Keratin"
+      - "Hydrolyzed Silk"
+      - "Hydrolyzed Collagen"
+      - "Hydrolyzed Wheat Protein"
+      - "Hydrolyzed Soy Protein"
+      - "Hydrolyzed Rice Protein"
+      - "Hydrolyzed Corn Protein"
+      - "Hydrolyzed Pea Protein"
+      - "Hydrolyzed Barley Protein"
+      - "Hydrolyzed Sunflower Seed Protein"
+      - "Hydrolyzed Quinoa"
+      - "Hydrolyzed Oat Protein"
+      - "Hydrolyzed Vegetable Protein"
+      - "Cocodimonium Hydroxypropyl Hydrolyzed Keratin"
+      - "Hydroxypropyltrimonium Hydrolyzed Keratin"
+      - "Steardimonium Hydroxypropyl Hydrolyzed Keratin"
+      - "Laurdimonium Hydroxypropyl Hydrolyzed Wheat Protein"
+      - "Isostearoyl Hydrolyzed Keratin"
+      - "Hydrolyzed Keratin PG-Propyl Methylsilanediol"
+      - "Isononyl Isononanoate"
+    roles: [protein_medium]
+    evidence: high
+    note: "Среднепроникающие: частично заходят внутрь, частично дают плёнку. Дают плотность и вес — то, что нужно тонким волосам. Курсом, не каждое мытьё."
+
+  - id: protein_film_only
+    ru: "Непроникающие протеины"
+    inci: ["Keratin", "Elastin", "Soluble Collagen", "Egg Protein", "Sericin", "Silk Protein", "Collagen"]
+    roles: [protein_film]
+    evidence: moderate
+    note: "Только защитная плёнка на поверхности. На здоровом волосе переизбыток белка → ломкость и жёсткость."
+
+# ---------------------------------------------------------------------------
+# Силиконы / плёнки
+# ---------------------------------------------------------------------------
+  - id: silicone_soluble
+    ru: "Водорастворимые силиконы"
+    inci: ["PEG-12 Dimethicone", "PEG-8 Dimethicone", "Dimethicone Copolyol", "PEG/PPG-18/18 Dimethicone", "Bis-PEG-18 Methyl Ether Dimethyl Silane"]
+    roles: [silicone_soluble, film_former]
+    evidence: high
+    note: "Смываются обычным шампунем, не копятся. Безопасный вариант гладкости."
+
+  - id: silicone_volatile
+    ru: "Летучие силиконы"
+    inci: ["Cyclopentasiloxane", "Cyclohexasiloxane", "Cyclomethicone"]
+    roles: [silicone_insoluble]
+    evidence: high
+    note: "Испаряются, оставляя лёгкость. Накопления почти не дают."
+
+  - id: silicone_heavy
+    ru: "Нерастворимые силиконы"
+    inci: ["Dimethicone", "Dimethiconol", "Amodimethicone", "Bis-Aminopropyl Dimethicone", "Trimethylsilylamodimethicone", "Phenyl Trimethicone", "Dimethicone Crosspolymer"]
+    roles: [silicone_insoluble, film_former]
+    evidence: high
+    note: "Отличная гладкость и защита от термо, но требуют нормального шампуня для смывания. На тонких волосах при накоплении — эффект «грязной» утяжелённой длины."
+
+# ---------------------------------------------------------------------------
+# UV, хелаты, прочее
+# ---------------------------------------------------------------------------
+  - id: uv_filters
+    ru: "UV-фильтры для волос"
+    inci: ["Benzophenone-4", "Ethylhexyl Methoxycinnamate", "Benzophenone-3", "Polysilicone-15", "Butyl Methoxydibenzoylmethane"]
+    roles: [uv_filter]
+    evidence: moderate
+    note: "Защищают цвет и белок от выгорания. Особенно уместны летом."
+
+  - id: chelators
+    ru: "Хелаты"
+    inci: ["Disodium EDTA", "Tetrasodium EDTA", "Etidronic Acid", "Phytic Acid", "Sodium Phytate", "Trisodium Ethylenediamine Disuccinate"]
+    roles: [chelator]
+    evidence: high
+    note: "Связывают кальций и железо из жёсткой воды — иначе они оседают на волосах и дают тусклость и жёсткость."
+
+  - id: vitamin_e
+    ru: "Витамин E"
+    inci: ["Tocopherol", "Tocopheryl Acetate", "Tocotrienol"]
+    roles: [barrier_lipid, soothing]
+    evidence: moderate
+    note: "Антиоксидант, защищает липиды от окисления."
+
+  - id: biotin
+    ru: "Биотин"
+    inci: ["Biotin", "Vitamin H"]
+    roles: [growth_stimulant]
+    evidence: low
+    note: "Наружно практически не работает — дефицит биотина лечится внутрь и встречается редко. Маркетинговый компонент."
+
+# ---------------------------------------------------------------------------
+# ПРОБЛЕМНЫЕ КОМПОНЕНТЫ
+# ---------------------------------------------------------------------------
+  - id: alcohol_denat
+    ru: "Денатурированный спирт"
+    inci: ["Alcohol Denat.", "Alcohol Denat", "SD Alcohol 40", "Ethanol", "Isopropyl Alcohol", "Denatured Alcohol", "Alcohol"]
+    roles: [drying_alcohol]
+    evidence: high
+    note: "Сушит кожу и волос, нарушает барьер. В лосьонах для роста часто нужен как растворитель — там терпимо, если он не в первой тройке. В шампунях и масках в начале состава — плохой знак."
+
+  - id: mit_cmit
+    ru: "Метилизотиазолиноны (MIT/CMIT)"
+    inci: ["Methylisothiazolinone", "Methylchloroisothiazolinone", "Benzisothiazolinone", "MIT", "CMIT"]
+    roles: [preservative_risky]
+    evidence: high
+    note: "Один из сильнейших контактных аллергенов в косметике. В ЕС запрещён в несмываемых средствах и ограничен в смываемых. При воспалённой чувствительной коже головы — лучше избегать."
+
+  - id: formaldehyde_releasers
+    ru: "Доноры формальдегида"
+    inci: ["DMDM Hydantoin", "Imidazolidinyl Urea", "Diazolidinyl Urea", "Quaternium-15", "Sodium Hydroxymethylglycinate", "Bronopol", "2-Bromo-2-Nitropropane-1,3-Diol"]
+    roles: [preservative_risky]
+    evidence: high
+    note: "Медленно выделяют формальдегид. Частая причина контактного дерматита кожи головы."
+
+  - id: fragrance
+    ru: "Отдушка"
+    inci: ["Parfum", "Fragrance", "Aroma"]
+    roles: [fragrance_allergen]
+    evidence: high
+    note: "Сама по себе не страшна, но для воспалённой и реактивной кожи головы — самый частый триггер раздражения."
+
+  - id: fragrance_allergens
+    ru: "Аллергены отдушки (маркируемые в ЕС)"
+    inci: ["Limonene", "Linalool", "Citral", "Geraniol", "Eugenol", "Cinnamal", "Citronellol", "Coumarin", "Benzyl Benzoate", "Benzyl Salicylate", "Hexyl Cinnamal", "Alpha-Isomethyl Ionone", "Butylphenyl Methylpropional", "Isoeugenol", "Farnesol"]
+    roles: [fragrance_allergen]
+    evidence: high
+    note: "26 аллергенов, которые по регламенту ЕС 1223/2009 обязаны указывать отдельно. Чем их больше в конце состава, тем выше риск для чувствительной кожи."
+
+  - id: menthol
+    ru: "Ментол / камфора / мята"
+    inci: ["Menthol", "Menthyl Lactate", "Camphor", "Mentha Piperita Oil", "Mentha Arvensis Leaf Oil", "Peppermint Oil"]
+    roles: [cooling_irritant, essential_oil_strong]
+    evidence: high
+    note: "Ощущение свежести — это не польза, а раздражение терморецепторов. На воспалённой коже усиливает чувствительность."
+
+  - id: essential_oils
+    ru: "Эфирные масла (активные)"
+    inci: ["Melaleuca Alternifolia Leaf Oil", "Tea Tree Oil", "Eucalyptus Globulus Leaf Oil", "Cinnamomum Zeylanicum", "Syzygium Aromaticum Oil", "Citrus Limon Peel Oil", "Lavandula Angustifolia Oil", "Thymus Vulgaris Oil"]
+    roles: [essential_oil_strong, antifungal]
+    evidence: moderate
+    note: "У чайного дерева есть доказанная противогрибковая активность, но эфирные масла — частые сенсибилизаторы. На воспалённой коже головы начинать с них не стоит."
+
+  - id: sodium_chloride
+    ru: "Соль (загуститель)"
+    inci: ["Sodium Chloride"]
+    roles: []
+    evidence: high
+    note: "Просто загуститель в шампуне. Ничего не значит ни в плюс, ни в минус."
